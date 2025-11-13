@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
     {
         Exit.SetActive(false);
     }
-    public void ExitGame()
+    public void ExitGame()  
     {
         Debug.Log("Exit Game Called");
         Application.Quit();
