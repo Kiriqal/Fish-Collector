@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 namespace Anoa
 {
@@ -14,6 +15,9 @@ namespace Anoa
         [SerializeField] protected BoatMovementController boatMovementController;
         [SerializeField] protected FishManager fishManager;
         [SerializeField] protected MinigameController minigameController;
+
+        [SerializeField] protected GameObject gameObjectExclamationMark;
+        [SerializeField] protected Text textExclamation; // Ganti dari SpriteRenderer
 
 
         protected bool boolIsFishing;
@@ -59,24 +63,51 @@ namespace Anoa
 
             yield return new WaitForSeconds(floatWaitTime);
 
-            // GACHA IKAN
-            bool boolGotFish = Random.Range(0, 100) < 80;
-
-            if (boolGotFish && fishManager != null)
+            // SELALU DAPAT IKAN
+            if (fishManager != null)
             {
                 FishData caughtFish = fishManager.GetRandomFish();
 
-                // PANGGIL MINIGAME CONTROLLER
+                // TAMPILKAN TANDA SERU SEBELUM MINIGAME
+                ShowExclamationMark(caughtFish.intRarity);
+                yield return new WaitForSeconds(1f); // Tampil 1 detik
+                HideExclamationMark();
+
+                // LANJUT KE MINIGAME
                 if (minigameController != null)
                 {
                     minigameController.StartMinigame(caughtFish);
-                    // TUNGGU MINIGAME SELESAI SEBELUM RESET TALI
                     yield return StartCoroutine(WaitForMinigameToComplete());
                 }
             }
-            else
+        }
+
+        protected void ShowExclamationMark(int rarity)
+        {
+            if (gameObjectExclamationMark != null && textExclamation != null)
             {
-                StartCoroutine(ResetFishingLine());
+                Color markColor = GetRarityColor(rarity);
+                textExclamation.color = markColor;
+                gameObjectExclamationMark.SetActive(true);
+            }
+        }
+
+        protected void HideExclamationMark()
+        {
+            if (gameObjectExclamationMark != null)
+            {
+                gameObjectExclamationMark.SetActive(false);
+            }
+        }
+
+        protected Color GetRarityColor(int rarity)
+        {
+            switch (rarity)
+            {
+                case 1: return new Color(0.2f, 0.8f, 0.2f); // Hijau - Common
+                case 2: return new Color(1f, 0.5f, 0f);     // Oren - Epic
+                case 3: return new Color(1f, 0.2f, 0.2f);   // Merah - Mythic
+                default: return Color.white;
             }
         }
 

@@ -11,12 +11,16 @@ namespace Anoa
         [SerializeField] protected Slider sliderProgressBar;
         [SerializeField] protected RectTransform rectTransformTarget;
         [SerializeField] protected RectTransform rectTransformPlayerBar;
+        [SerializeField] protected FishPopupController fishPopupController;
 
         [Header("Minigame Settings")]
         [SerializeField] protected float floatTargetSpeed = 200f;
         [SerializeField] protected float floatProgressOnPerfect = 0.25f;
         [SerializeField] protected float floatProgressOnGood = 0.1f;
         [SerializeField] protected float floatProgressOnMiss = -0.15f;
+
+
+        [SerializeField] protected FishCounterController fishCounterController;
 
         protected bool boolIsMinigameActive;
         protected int intTargetDirection = 1;
@@ -132,11 +136,43 @@ namespace Anoa
 
         protected void MinigameSuccess()
         {
-            Debug.Log("Berhasil dapat ikan: " + currentFishData.strFishName);
+            Debug.Log("Dapat ikan: " + currentFishData.strFishName);
+
+            // TAMBAH COUNTER
+            if (fishCounterController != null)
+            {
+                fishCounterController.AddFish();
+            }
+
+            // TAMPILKAN POPUP
+            if (fishPopupController != null)
+            {
+                fishPopupController.ShowFishPopup(currentFishData);
+            }
+
             boolIsMinigameActive = false;
             gameObjectMinigamePanel.SetActive(false);
+        }
 
-            // TODO: Panggil reset fishing line
+        protected string GetRarityName(int rarity)
+        {
+            switch (rarity)
+            {
+                case 1: return "Common";
+                case 2: return "Epic";
+                case 3: return "Mythic";
+                default: return "Unknown";
+            }
+        }
+
+        protected void ShowFishCaughtPopup(FishData fishData)
+        {
+            string rarityName = GetRarityName(fishData.intRarity);
+
+            Debug.Log("=== IKAN DIDAPAT ===");
+            Debug.Log(fishData.strFishName);
+            Debug.Log("Rarity: " + rarityName);
+            Debug.Log("====================");
         }
 
         protected void MinigameFailed()
