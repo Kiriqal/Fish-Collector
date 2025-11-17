@@ -6,8 +6,8 @@ namespace Anoa
     public class FishCounterController : MonoBehaviour
     {
         [SerializeField] protected Text textFishCounter;
+        [SerializeField] protected int intMaxFishCount = 5; // BISA EDIT DI INSPECTOR
         protected int intCurrentFishCount;
-        protected int intMaxFishCount = 30;
 
         protected void Start()
         {
@@ -28,6 +28,17 @@ namespace Anoa
         public bool IsCollectionComplete()
         {
             return intCurrentFishCount >= intMaxFishCount;
+        }
+
+        public int GetCurrentFishCount()
+        {
+            return intCurrentFishCount;
+        }
+
+        public void ResetCounter()
+        {
+            intCurrentFishCount = 0;
+            UpdateCounter();
         }
     }
 }

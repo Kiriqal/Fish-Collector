@@ -1,28 +1,38 @@
+
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace Anoa
 {
     public class FishingRodController : MonoBehaviour
     {
+        [Header("Fishing Settings")]
         [SerializeField] protected Transform transFishingLine;
         [SerializeField] protected float floatLineSpeed = 3f;
         [SerializeField] protected float floatMaxLineLength = 3f;
         [SerializeField] protected float floatWaitTime = 2f;
 
-        // Reference ke BoatMovementController
+        [Header("References")]
         [SerializeField] protected BoatMovementController boatMovementController;
         [SerializeField] protected FishManager fishManager;
         [SerializeField] protected MinigameController minigameController;
+        [SerializeField] protected FishCounterController fishCounterController; // TAMBAH INI
 
+        [Header("Exclamation Mark")]
         [SerializeField] protected GameObject gameObjectExclamationMark;
-        [SerializeField] protected Text textExclamation; // Ganti dari SpriteRenderer
+        [SerializeField] protected Text textExclamation;
+
+        [SerializeField] protected GameObject gameObjectFullNotification;
+        [SerializeField] protected BaitSelectionManager baitSelectionManager;
+        [SerializeField] protected GameObject gameObjectBaitEmptyNotification;
 
 
         protected bool boolIsFishing;
         protected float floatCurrentLineLength;
         protected Vector3 vecOriginalLinePosition;
+        protected List<FishData> listCaughtFishes = new List<FishData>();
 
         protected void Start()
         {
@@ -40,13 +50,65 @@ namespace Anoa
         {
             if (!boolIsFishing)
             {
-                StartCoroutine(FishingProcess());
+                if (fishCounterController != null && fishCounterController.IsCollectionComplete())
+                {
+                    Debug.Log("Kapal penuh! Jual ikan di dermaga dulu.");
+                }
+                else if (baitSelectionManager != null && !baitSelectionManager.HasEquippedBait())
+                {
+                    // TAMPILKAN NOTIFIKASI DI LAYAR
+                    ShowBaitEmptyNotification();
+                }
+                else
+                {
+                    StartCoroutine(FishingProcess());
+                }
             }
         }
+
+        protected void ShowBaitEmptyNotification()
+        {
+            if (gameObjectBaitEmptyNotification != null)
+            {
+                gameObjectBaitEmptyNotification.SetActive(true);
+                StartCoroutine(HideBaitEmptyNotification());
+            }
+        }
+
+        protected IEnumerator HideBaitEmptyNotification()
+        {
+            yield return new WaitForSeconds(2f);
+            if (gameObjectBaitEmptyNotification != null)
+            {
+                gameObjectBaitEmptyNotification.SetActive(false);
+            }
+        }
+
+        protected void ShowFullNotification()
+        {
+            if (gameObjectFullNotification != null)
+            {
+                gameObjectFullNotification.SetActive(true);
+                StartCoroutine(HideNotificationAfterDelay());
+            }
+        }
+
+        protected IEnumerator HideNotificationAfterDelay()
+        {
+            yield return new WaitForSeconds(2f);
+            gameObjectFullNotification.SetActive(false);
+        }
+
 
         protected IEnumerator FishingProcess()
         {
             boolIsFishing = true;
+
+            // PAKAI 1 BAIT SEBELUM MEMANCING
+            if (baitSelectionManager != null)
+            {
+                baitSelectionManager.UseEquippedBait();
+            }
 
             if (boatMovementController != null)
             {
@@ -70,7 +132,7 @@ namespace Anoa
 
                 // TAMPILKAN TANDA SERU SEBELUM MINIGAME
                 ShowExclamationMark(caughtFish.intRarity);
-                yield return new WaitForSeconds(1f); // Tampil 1 detik
+                yield return new WaitForSeconds(1f);
                 HideExclamationMark();
 
                 // LANJUT KE MINIGAME
@@ -80,6 +142,23 @@ namespace Anoa
                     yield return StartCoroutine(WaitForMinigameToComplete());
                 }
             }
+
+            if (fishManager != null)
+            {
+                FishData caughtFish = fishManager.GetRandomFish();
+                listCaughtFishes.Add(caughtFish); // SIMPAN IKAN
+                                       
+            }   
+        }
+
+        public List<FishData> GetCaughtFishes()
+        {
+            return listCaughtFishes;
+        }
+
+        public void ClearCaughtFishes()
+        {
+            listCaughtFishes.Clear();
         }
 
         protected void ShowExclamationMark(int rarity)
@@ -156,5 +235,7 @@ namespace Anoa
                 transFishingLine.localPosition = vecOriginalLinePosition + Vector3.down * (floatCurrentLineLength / 2f);
             }
         }
+
+
     }
 }
