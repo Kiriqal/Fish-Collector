@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc39fa3b0c711d499d2839e8f319d7d, type: 3}
   m_Name: Rod_Gold
   m_EditorClassIdentifier: 
-  rodType: 1
+  rodType: 2
   strRodName: Gold Rod
   intPrice: 40
   spriteRod: {fileID: 0}
   boolIsOwned: 0
   boolIsEquipped: 0
+  intProgressBonus: 40

@@ -8,14 +8,14 @@ namespace Anoa
     {
         [Header("Bobber Items")]
         [SerializeField] protected List<BobberData> listBobberData;
-        [SerializeField] protected Button buttonBasicBobberBuy;
-        [SerializeField] protected Button buttonAdvancedBobberBuy;
-        [SerializeField] protected Button buttonProBobberBuy;
 
         [Header("UI References")]
-        [SerializeField] protected Text textBasicBobberPrice;
-        [SerializeField] protected Text textAdvancedBobberPrice;
-        [SerializeField] protected Text textProBobberPrice;
+        [SerializeField] protected Button buttonIronBobberBuy;
+        [SerializeField] protected Button buttonGoldBobberBuy;
+        [SerializeField] protected Button buttonDiamondBobberBuy;
+        [SerializeField] protected Text textIronBobberPrice;
+        [SerializeField] protected Text textGoldBobberPrice;
+        [SerializeField] protected Text textDiamondBobberPrice;
 
         protected void Start()
         {
@@ -24,19 +24,35 @@ namespace Anoa
 
         protected void InitializeBobberShop()
         {
+            // REGISTER DATA KE STATIC LIST
             foreach (BobberData bobber in listBobberData)
             {
-                bobber.boolIsOwned = false;
-                bobber.boolIsEquipped = false;
+                if (!BobberData.listAllBobberData.Contains(bobber))
+                {
+                    BobberData.listAllBobberData.Add(bobber);
+                }
             }
+
+            // SET DEFAULT BOBBER JIKA BELUM ADA
+            if (BobberData.currentEquippedBobber == null)
+            {
+                BobberData defaultBobber = ScriptableObject.CreateInstance<BobberData>();
+                defaultBobber.bobberType = BobberType.None;
+                defaultBobber.strBobberName = "No Bobber";
+                defaultBobber.floatSpeedReduction = 0f;
+                defaultBobber.boolIsOwned = true;
+                defaultBobber.boolIsEquipped = true;
+                BobberData.currentEquippedBobber = defaultBobber;
+            }
+
             UpdateBobberButtons();
         }
 
         protected void UpdateBobberButtons()
         {
-            UpdateSingleBobberButton(0, buttonBasicBobberBuy, textBasicBobberPrice);
-            UpdateSingleBobberButton(1, buttonAdvancedBobberBuy, textAdvancedBobberPrice);
-            UpdateSingleBobberButton(2, buttonProBobberBuy, textProBobberPrice);
+            UpdateSingleBobberButton(0, buttonIronBobberBuy, textIronBobberPrice);
+            UpdateSingleBobberButton(1, buttonGoldBobberBuy, textGoldBobberPrice);
+            UpdateSingleBobberButton(2, buttonDiamondBobberBuy, textDiamondBobberPrice);
         }
 
         protected void UpdateSingleBobberButton(int bobberIndex, Button button, Text priceText)
@@ -47,25 +63,25 @@ namespace Anoa
             {
                 button.GetComponentInChildren<Text>().text = "EQUIPPED";
                 button.interactable = false;
-                priceText.text = "OWNED";
+                if (priceText != null) priceText.text = "OWNED";
             }
             else if (bobber.boolIsOwned)
             {
                 button.GetComponentInChildren<Text>().text = "EQUIP";
                 button.interactable = true;
-                priceText.text = "OWNED";
+                if (priceText != null) priceText.text = "OWNED";
             }
             else
             {
                 button.GetComponentInChildren<Text>().text = "BUY";
                 button.interactable = true;
-                priceText.text = "Price: " + bobber.intPrice;
+                if (priceText != null) priceText.text = "Price: " + bobber.intPrice;
             }
         }
 
-        public void BuyBasicBobber() { TryBuyBobber(0); }
-        public void BuyAdvancedBobber() { TryBuyBobber(1); }
-        public void BuyProBobber() { TryBuyBobber(2); }
+        public void BuyIronBobber() { TryBuyBobber(0); }
+        public void BuyGoldBobber() { TryBuyBobber(1); }
+        public void BuyDiamondBobber() { TryBuyBobber(2); }
 
         protected void TryBuyBobber(int bobberIndex)
         {
@@ -83,12 +99,18 @@ namespace Anoa
 
         protected void EquipBobber(int bobberIndex)
         {
+            // UNEQUIP SEMUA BOBBER DULU
             foreach (BobberData bobber in listBobberData)
             {
                 bobber.boolIsEquipped = false;
             }
+
+            // EQUIP BOBBER YANG DIPILIH
             listBobberData[bobberIndex].boolIsEquipped = true;
-            Debug.Log("Equipped: " + listBobberData[bobberIndex].strBobberName);
+            BobberData.currentEquippedBobber = listBobberData[bobberIndex]; // +++ PASTIKAN INI ADA +++
+
+            Debug.Log("Equipped: " + listBobberData[bobberIndex].strBobberName +
+                     " (Speed Reduction: " + (listBobberData[bobberIndex].floatSpeedReduction * 100) + "%)");
         }
     }
 }

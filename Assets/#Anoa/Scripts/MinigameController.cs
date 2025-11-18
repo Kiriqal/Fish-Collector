@@ -15,12 +15,16 @@ namespace Anoa
 
         [Header("Minigame Settings")]
         [SerializeField] protected float floatTargetSpeed = 200f;
-        [SerializeField] protected float floatProgressOnPerfect = 0.25f;
-        [SerializeField] protected float floatProgressOnGood = 0.1f;
-        [SerializeField] protected float floatProgressOnMiss = -0.15f;
-
-
         [SerializeField] protected FishCounterController fishCounterController;
+
+        [Header("References")]
+        [SerializeField] protected RodManager rodManager;
+        [SerializeField] protected BobberManager bobberManager; // TAMBAH INI
+
+        [Header("Fish Speed Multipliers")]
+        [SerializeField] protected float floatCommonSpeedMultiplier = 0.4f;    // 40/100
+        [SerializeField] protected float floatEpicSpeedMultiplier = 0.6f;      // 60/100  
+        [SerializeField] protected float floatMythicSpeedMultiplier = 0.8f;    // 80/100
 
         protected bool boolIsMinigameActive;
         protected int intTargetDirection = 1;
@@ -43,9 +47,33 @@ namespace Anoa
             floatCurrentProgress = 0f;
             boolIsMinigameActive = true;
 
+            UpdatePlayerBarSize();
             UpdateProgressBar();
             ResetTargetPosition();
             gameObjectMinigamePanel.SetActive(true);
+        }
+
+        protected void UpdatePlayerBarSize()
+        {
+            if (rodManager != null && rectTransformPlayerBar != null)
+            {
+                RodData equippedRod = rodManager.GetEquippedRod();
+                float barSize = 18f; // Default 18
+
+                if (equippedRod != null)
+                {
+                    switch (equippedRod.rodType)
+                    {
+                        case RodType.Default: barSize = 18f; break;
+                        case RodType.Iron: barSize = 29f; break;
+                        case RodType.Gold: barSize = 40f; break;
+                        case RodType.Diamond: barSize = 50f; break;
+                    }
+                }
+
+                rectTransformPlayerBar.sizeDelta = new Vector2(barSize, rectTransformPlayerBar.sizeDelta.y);
+                Debug.Log($"Player Bar Size: {barSize}/100 (Rod: {equippedRod?.strRodName})");
+            }
         }
 
         protected void Update()
@@ -54,7 +82,6 @@ namespace Anoa
 
             MoveTarget();
 
-            // INPUT UNTUK MOUSE (EDITOR) & TOUCH (MOBILE)
             if (Input.GetMouseButtonDown(0))
             {
                 OnTap();
@@ -63,66 +90,90 @@ namespace Anoa
 
         protected void MoveTarget()
         {
-            // Dapatkan width parent area
             RectTransform parentArea = rectTransformTarget.parent.GetComponent<RectTransform>();
             float areaWidth = parentArea.rect.width;
             float targetWidth = rectTransformTarget.rect.width;
 
-            // Gerakkan target
-            float newX = rectTransformTarget.anchoredPosition.x + (floatTargetSpeed * intTargetDirection * Time.deltaTime);
+            // HITUNG FINAL SPEED DENGAN BOBBER BUFF
+            float finalSpeed = GetFinalTargetSpeed();
+            float newX = rectTransformTarget.anchoredPosition.x + (finalSpeed * intTargetDirection * Time.deltaTime);
 
-            // Batasi agar tidak keluar area
             float bound = (areaWidth - targetWidth) / 2f;
             newX = Mathf.Clamp(newX, -bound, bound);
 
             rectTransformTarget.anchoredPosition = new Vector2(newX, rectTransformTarget.anchoredPosition.y);
 
-            // Balik arah jika sampai ujung
-            if (Mathf.Abs(newX) >= bound - 1f) // -1f untuk tolerance
+            if (Mathf.Abs(newX) >= bound - 1f)
             {
                 intTargetDirection *= -1;
             }
+        }
+
+        protected float GetFinalTargetSpeed()
+        {
+            // BASE SPEED BERDASARKAN RARITY IKAN
+            float baseSpeedMultiplier = 1f;
+
+            if (currentFishData != null)
+            {
+                switch (currentFishData.intRarity)
+                {
+                    case 1: baseSpeedMultiplier = floatCommonSpeedMultiplier; break;    // Common: 40%
+                    case 2: baseSpeedMultiplier = floatEpicSpeedMultiplier; break;      // Epic: 60%
+                    case 3: baseSpeedMultiplier = floatMythicSpeedMultiplier; break;    // Mythic: 80%
+                }
+            }
+
+            // APPLY BOBBER SPEED REDUCTION
+            float bobberReduction = 0f;
+            if (bobberManager != null)
+            {
+                bobberReduction = bobberManager.GetSpeedReductionPercent();
+            }
+
+            float finalSpeed = floatTargetSpeed * baseSpeedMultiplier * (1f - bobberReduction);
+
+            Debug.Log($"Target Speed: {finalSpeed} (Base: {floatTargetSpeed * baseSpeedMultiplier}, " +
+                     $"Bobber Reduction: {bobberReduction * 100}%, Fish Rarity: {currentFishData?.intRarity})");
+
+            return finalSpeed;
         }
 
         protected void OnTap()
         {
             if (!boolIsMinigameActive) return;
 
-            // Cek posisi target relatif terhadap player bar
-            float distance = Mathf.Abs(rectTransformTarget.anchoredPosition.x - rectTransformPlayerBar.anchoredPosition.x);
-            float maxDistance = 50f;
+            float playerBarHalfWidth = rectTransformPlayerBar.rect.width / 2f;
+            float playerBarLeft = rectTransformPlayerBar.anchoredPosition.x - playerBarHalfWidth;
+            float playerBarRight = rectTransformPlayerBar.anchoredPosition.x + playerBarHalfWidth;
 
-            if (distance < 15f) // Perfect
+            float targetPositionX = rectTransformTarget.anchoredPosition.x;
+            bool isTargetInPlayerBar = (targetPositionX >= playerBarLeft && targetPositionX <= playerBarRight);
+
+            if (isTargetInPlayerBar)
             {
-                floatCurrentProgress += floatProgressOnPerfect;
-                Debug.Log("Perfect! Progress: " + (floatCurrentProgress * 100f) + "%");
+                floatCurrentProgress += 0.25f;
+                Debug.Log("Perfect! +25% progress (Target dalam player bar)");
             }
-            else if (distance < maxDistance) // Good
+            else
             {
-                floatCurrentProgress += floatProgressOnGood;
-                Debug.Log("Good! Progress: " + (floatCurrentProgress * 100f) + "%");
-            }
-            else // Miss
-            {
-                floatCurrentProgress += floatProgressOnMiss;
-                Debug.Log("Miss! Progress: " + (floatCurrentProgress * 100f) + "%");
+                floatCurrentProgress -= 0.15f;
+                float distance = Mathf.Abs(targetPositionX - rectTransformPlayerBar.anchoredPosition.x);
+                Debug.Log($"Miss! -15% progress (Target di luar player bar, jarak: {distance})");
             }
 
-            // Clamp progress antara 0-1
             floatCurrentProgress = Mathf.Clamp01(floatCurrentProgress);
             UpdateProgressBar();
 
-            // CEK JIKA PROGRESS 0% (GAGAL) ATAU 100% (BERHASIL)
             if (floatCurrentProgress >= 1f)
             {
                 MinigameSuccess();
             }
-            else if (floatCurrentProgress <= 0f) // TAMBAH INI
+            else if (floatCurrentProgress <= 0f)
             {
                 MinigameFailed();
             }
         }
-
 
         protected void UpdateProgressBar()
         {
@@ -138,13 +189,11 @@ namespace Anoa
         {
             Debug.Log("Dapat ikan: " + currentFishData.strFishName);
 
-            // TAMBAH COUNTER
             if (fishCounterController != null)
             {
                 fishCounterController.AddFish();
             }
 
-            // TAMPILKAN POPUP
             if (fishPopupController != null)
             {
                 fishPopupController.ShowFishPopup(currentFishData);
@@ -154,34 +203,11 @@ namespace Anoa
             gameObjectMinigamePanel.SetActive(false);
         }
 
-        protected string GetRarityName(int rarity)
-        {
-            switch (rarity)
-            {
-                case 1: return "Common";
-                case 2: return "Epic";
-                case 3: return "Mythic";
-                default: return "Unknown";
-            }
-        }
-
-        protected void ShowFishCaughtPopup(FishData fishData)
-        {
-            string rarityName = GetRarityName(fishData.intRarity);
-
-            Debug.Log("=== IKAN DIDAPAT ===");
-            Debug.Log(fishData.strFishName);
-            Debug.Log("Rarity: " + rarityName);
-            Debug.Log("====================");
-        }
-
         protected void MinigameFailed()
         {
             Debug.Log("Minigame gagal! Ikan lepas!");
             boolIsMinigameActive = false;
             gameObjectMinigamePanel.SetActive(false);
-
-            // TODO: Panggil reset fishing line
         }
 
         public bool IsMinigameActive()

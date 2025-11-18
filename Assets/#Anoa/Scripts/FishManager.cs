@@ -5,6 +5,9 @@ namespace Anoa
 {
     public class FishManager : MonoBehaviour
     {
+        [Header("Bait Reference")]
+        [SerializeField] protected BaitSelectionManager baitSelectionManager;
+
         [SerializeField] protected List<FishData> listFishData;
 
         protected void Start()
@@ -14,7 +17,6 @@ namespace Anoa
 
         protected void InitializeFishData()
         {
-            // Buat 3 ikan dummy jika belum ada
             if (listFishData.Count == 0)
             {
                 Debug.Log("Buat 3 FishData di Project window: Create → Anoa → FishData");
@@ -29,23 +31,36 @@ namespace Anoa
                 return null;
             }
 
-            float randomValue = Random.Range(0f, 100f);
+            float luckBonus = 0f;
 
-            if (randomValue < 95f) // Common 95%
+            // DAPATKAN LUCK DARI BAIT YANG DIPAKAI
+            if (baitSelectionManager != null && baitSelectionManager.HasEquippedBait())
             {
-                Debug.Log("Dapat Common fish");
-                return GetFishByRarity(1);
+                luckBonus = baitSelectionManager.GetEquippedBaitLuck();
+                Debug.Log($"Bait luck bonus: {luckBonus * 100}%");
             }
-            else if (randomValue < 99f) // Epic 4% 
+
+            float randomValue = Random.Range(0f, 100f);
+            FishData caughtFish = null;
+
+            // APPLY LUCK BONUS KE RARITY CHANCE
+            if (randomValue < (95f - (luckBonus * 100f))) // Common berkurang
             {
-                Debug.Log("Dapat Epic fish");
-                return GetFishByRarity(2);
+                caughtFish = GetFishByRarity(1);
+                Debug.Log($"Dapat Common fish (dengan bait luck: {luckBonus * 100}%)");
             }
-            else // Mythic 1%
+            else if (randomValue < (99f - (luckBonus * 50f))) // Epic bertambah
             {
-                Debug.Log("Dapat Mythic fish");
-                return GetFishByRarity(3);
+                caughtFish = GetFishByRarity(2);
+                Debug.Log($"Dapat Epic fish (dengan bait luck: {luckBonus * 100}%)");
             }
+            else // Mythic bertambah
+            {
+                caughtFish = GetFishByRarity(3);
+                Debug.Log($"Dapat Mythic fish (dengan bait luck: {luckBonus * 100}%)");
+            }
+
+            return caughtFish;
         }
 
         protected FishData GetFishByRarity(int rarity)

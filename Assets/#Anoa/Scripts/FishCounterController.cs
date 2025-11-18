@@ -6,38 +6,42 @@ namespace Anoa
     public class FishCounterController : MonoBehaviour
     {
         [SerializeField] protected Text textFishCounter;
-        [SerializeField] protected int intMaxFishCount = 5; // BISA EDIT DI INSPECTOR
-        protected int intCurrentFishCount;
+        [SerializeField] protected int intMaxFishCount = 5;
+
+        // BUAT STATIC UNTUK PERSISTENCE
+        protected static int intCurrentFishCountStatic;
 
         protected void Start()
         {
+            // +++ GUNAKAN STATIC VALUE +++
+            intCurrentFishCountStatic = Mathf.Clamp(intCurrentFishCountStatic, 0, intMaxFishCount);
             UpdateCounter();
         }
 
         public void AddFish()
         {
-            intCurrentFishCount++;
+            intCurrentFishCountStatic++;
             UpdateCounter();
         }
 
         protected void UpdateCounter()
         {
-            textFishCounter.text = intCurrentFishCount + "/" + intMaxFishCount;
+            textFishCounter.text = intCurrentFishCountStatic + "/" + intMaxFishCount;
         }
 
         public bool IsCollectionComplete()
         {
-            return intCurrentFishCount >= intMaxFishCount;
+            return intCurrentFishCountStatic >= intMaxFishCount;
         }
 
         public int GetCurrentFishCount()
         {
-            return intCurrentFishCount;
+            return intCurrentFishCountStatic;
         }
 
         public void ResetCounter()
         {
-            intCurrentFishCount = 0;
+            intCurrentFishCountStatic = 0;
             UpdateCounter();
         }
     }

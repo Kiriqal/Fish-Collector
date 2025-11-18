@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb26244279b891941bfe5529c56962bd, type: 3}
   m_Name: Bobber_Iron
   m_EditorClassIdentifier: 
-  bobberType: 0
+  bobberType: 1
   strBobberName: Iron Bobber
   intPrice: 20
   spriteBobber: {fileID: 0}
   boolIsOwned: 0
   boolIsEquipped: 0
+  floatSpeedReduction: 0.1

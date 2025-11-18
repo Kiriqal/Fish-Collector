@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb26244279b891941bfe5529c56962bd, type: 3}
-  m_Name: Bobber_Diamond
+  m_Script: {fileID: 11500000, guid: 7dc39fa3b0c711d499d2839e8f319d7d, type: 3}
+  m_Name: Rod_Default
   m_EditorClassIdentifier: 
-  bobberType: 2
-  strBobberName: Diamond Bobber
-  intPrice: 50
-  spriteBobber: {fileID: 0}
+  rodType: 0
+  strRodName: Default
+  intPrice: 0
+  spriteRod: {fileID: 0}
   boolIsOwned: 0
   boolIsEquipped: 0
-  floatSpeedReduction: 0.3
+  intProgressBonus: 18

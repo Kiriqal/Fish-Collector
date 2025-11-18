@@ -17,3 +17,4 @@ MonoBehaviour:
   intPrice: 5
   spriteBait: {fileID: 0}
   intQuantity: 0
+  floatLuckBonus: 0.05

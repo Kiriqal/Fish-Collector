@@ -8,14 +8,14 @@ namespace Anoa
     {
         [Header("Rod Items")]
         [SerializeField] protected List<RodData> listRodData;
-        [SerializeField] protected Button buttonWoodRodBuy;
-        [SerializeField] protected Button buttonIronRodBuy;
-        [SerializeField] protected Button buttonGoldRodBuy;
 
         [Header("UI References")]
-        [SerializeField] protected Text textWoodRodPrice;
+        [SerializeField] protected Button buttonIronRodBuy;
+        [SerializeField] protected Button buttonGoldRodBuy;
+        [SerializeField] protected Button buttonDiamondRodBuy;
         [SerializeField] protected Text textIronRodPrice;
         [SerializeField] protected Text textGoldRodPrice;
+        [SerializeField] protected Text textDiamondRodPrice;
 
         protected void Start()
         {
@@ -24,91 +24,127 @@ namespace Anoa
 
         protected void InitializeRodShop()
         {
-            // SEMUA ROD AWALNYA BELUM DIMILIKI
+            // REGISTER DATA KE STATIC LIST
             foreach (RodData rod in listRodData)
             {
-                rod.boolIsOwned = false;
-                rod.boolIsEquipped = false;
+                if (!RodData.listAllRodData.Contains(rod))
+                {
+                    RodData.listAllRodData.Add(rod);
+                }
             }
 
+            // LOAD STATE DARI STATIC DATA
+            LoadRodStates();
             UpdateRodButtons();
+        }
+
+        protected void LoadRodStates()
+        {
+            foreach (RodData staticRod in RodData.listAllRodData)
+            {
+                foreach (RodData sceneRod in listRodData)
+                {
+                    if (sceneRod.rodType == staticRod.rodType)
+                    {
+                        sceneRod.boolIsOwned = staticRod.boolIsOwned;
+                        sceneRod.boolIsEquipped = staticRod.boolIsEquipped;
+                    }
+                }
+            }
+        }
+
+        protected void SaveRodStates()
+        {
+            foreach (RodData sceneRod in listRodData)
+            {
+                foreach (RodData staticRod in RodData.listAllRodData)
+                {
+                    if (staticRod.rodType == sceneRod.rodType)
+                    {
+                        staticRod.boolIsOwned = sceneRod.boolIsOwned;
+                        staticRod.boolIsEquipped = sceneRod.boolIsEquipped;
+                    }
+                }
+            }
+
+            foreach (RodData rod in listRodData)
+            {
+                if (rod.boolIsEquipped)
+                {
+                    RodData.currentEquippedRod = rod;
+                    break;
+                }
+            }
         }
 
         protected void UpdateRodButtons()
         {
-            UpdateSingleRodButton(0, buttonWoodRodBuy, textWoodRodPrice);
-            UpdateSingleRodButton(1, buttonIronRodBuy, textIronRodPrice);
-            UpdateSingleRodButton(2, buttonGoldRodBuy, textGoldRodPrice);
+            // +++ PERBAIKI: INDEX HARUS SAMA DENGAN LIST ORDER +++
+            if (buttonIronRodBuy != null) UpdateSingleRodButton(0, buttonIronRodBuy, textIronRodPrice);    // Index 0 = Iron
+            if (buttonGoldRodBuy != null) UpdateSingleRodButton(1, buttonGoldRodBuy, textGoldRodPrice);    // Index 1 = Gold
+            if (buttonDiamondRodBuy != null) UpdateSingleRodButton(2, buttonDiamondRodBuy, textDiamondRodPrice); // Index 2 = Diamond
         }
 
         protected void UpdateSingleRodButton(int rodIndex, Button button, Text priceText)
         {
+            if (listRodData == null || listRodData.Count <= rodIndex) return;
+            if (button == null) return;
+
             RodData rod = listRodData[rodIndex];
+            Text buttonText = button.GetComponentInChildren<Text>();
+            if (buttonText == null) return;
 
             if (rod.boolIsEquipped)
             {
-                // SEDANG DIPAKAI
-                button.GetComponentInChildren<Text>().text = "EQUIPPED";
+                buttonText.text = "EQUIPPED";
                 button.interactable = false;
-                priceText.text = "OWNED";
+                if (priceText != null) priceText.text = "OWNED";
             }
             else if (rod.boolIsOwned)
             {
-                // SUDAH DIMILIKI TAPI TIDAK DIPAKAI
-                button.GetComponentInChildren<Text>().text = "EQUIP";
+                buttonText.text = "EQUIP";
                 button.interactable = true;
-                priceText.text = "OWNED";
+                if (priceText != null) priceText.text = "OWNED";
             }
             else
             {
-                // BELUM DIMILIKI
-                button.GetComponentInChildren<Text>().text = "BUY";
+                buttonText.text = "BUY";
                 button.interactable = true;
-                priceText.text = "Price: " + rod.intPrice;
+                if (priceText != null) priceText.text = "Price: " + rod.intPrice;
             }
         }
 
-        public void BuyWoodRod()
-        {
-            TryBuyRod(0);
-        }
-
-        public void BuyIronRod()
-        {
-            TryBuyRod(1);
-        }
-
-        public void BuyGoldRod()
-        {
-            TryBuyRod(2);
-        }
+        public void BuyIronRod() { TryBuyRod(0); }     // Index 0 = Iron
+        public void BuyGoldRod() { TryBuyRod(1); }     // Index 1 = Gold
+        public void BuyDiamondRod() { TryBuyRod(2); }  // Index 2 = Diamond
 
         protected void TryBuyRod(int rodIndex)
         {
+            if (listRodData == null || listRodData.Count <= rodIndex) return;
+
             RodData rod = listRodData[rodIndex];
 
             if (!rod.boolIsOwned)
             {
-                // BELI ROD
                 rod.boolIsOwned = true;
                 Debug.Log("Bought: " + rod.strRodName);
             }
 
-            // EQUIP ROD (baik baru dibeli atau sudah dimiliki)
             EquipRod(rodIndex);
-            UpdateRodButtons();
         }
 
         protected void EquipRod(int rodIndex)
         {
-            // UNEQUIP SEMUA ROD DULU
+            if (listRodData == null || listRodData.Count <= rodIndex) return;
+
             foreach (RodData rod in listRodData)
             {
                 rod.boolIsEquipped = false;
             }
 
-            // EQUIP ROD YANG DIPILIH
             listRodData[rodIndex].boolIsEquipped = true;
+            SaveRodStates();
+            UpdateRodButtons();
             Debug.Log("Equipped: " + listRodData[rodIndex].strRodName);
         }
     }

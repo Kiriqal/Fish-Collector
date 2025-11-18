@@ -28,7 +28,8 @@ namespace Anoa
         [Header("Bait Data References")]
         [SerializeField] protected List<BaitData> listBaitData;
 
-        protected BaitData currentEquippedBait;
+        // +++ BUAT STATIC UNTUK PERSISTENCE +++
+        protected static BaitData currentEquippedBaitStatic;
 
         protected void Start()
         {
@@ -39,12 +40,12 @@ namespace Anoa
 
         protected void InitializeBaitData()
         {
-            // GUNAKAN BAITDATA YANG SAMA DENGAN SHOPScene
-            // Pastikan di Inspector, listBaitData diisi dengan Bait_Worm, Bait_SweetCorn, Bait_Crickets
-            // YANG SAMA dengan yang ada di BaitShopManager
+            // +++ GUNAKAN STATIC VALUE +++
+            if (currentEquippedBaitStatic != null)
+            {
+                Debug.Log($"Loaded equipped bait: {currentEquippedBaitStatic.strBaitName}");
+            }
         }
-
-
 
         public void ShowBaitPanel()
         {
@@ -85,15 +86,13 @@ namespace Anoa
 
             Text buttonText = button.GetComponentInChildren<Text>();
 
-            Debug.Log($"Update button: {bait.strBaitName}, Quantity: {bait.intQuantity}");
-
             if (bait.intQuantity == 0)
             {
                 buttonText.text = "EMPTY";
                 button.interactable = false;
                 button.GetComponent<Image>().color = colorEmpty;
             }
-            else if (bait == currentEquippedBait)
+            else if (bait == currentEquippedBaitStatic) // +++ PAKAI STATIC +++
             {
                 buttonText.text = "EQUIPPED";
                 button.interactable = false;
@@ -126,30 +125,42 @@ namespace Anoa
             BaitData bait = GetBaitByType(baitType);
             if (bait != null && bait.intQuantity > 0)
             {
-                currentEquippedBait = bait;
+                currentEquippedBaitStatic = bait; // +++ SIMPAN KE STATIC +++
                 UpdateBaitButtons();
-                Debug.Log("Equipped: " + bait.strBaitName);
+                Debug.Log("Equipped: " + bait.strBaitName + " (Luck: " + (bait.floatLuckBonus * 100) + "%)");
             }
         }
 
         public bool HasEquippedBait()
         {
-            return currentEquippedBait != null && currentEquippedBait.intQuantity > 0;
+            return currentEquippedBaitStatic != null && currentEquippedBaitStatic.intQuantity > 0; // +++ PAKAI STATIC +++
+        }
+
+        public float GetEquippedBaitLuck()
+        {
+            if (currentEquippedBaitStatic != null) // +++ PAKAI STATIC +++
+            {
+                return currentEquippedBaitStatic.floatLuckBonus;
+            }
+            return 0f;
+        }
+
+        public BaitData GetEquippedBait()
+        {
+            return currentEquippedBaitStatic; // +++ PAKAI STATIC +++
         }
 
         public void UseEquippedBait()
         {
-            if (currentEquippedBait != null && currentEquippedBait.intQuantity > 0)
+            if (currentEquippedBaitStatic != null && currentEquippedBaitStatic.intQuantity > 0) // +++ PAKAI STATIC +++
             {
-                currentEquippedBait.intQuantity--;
-                Debug.Log($"Used 1 {currentEquippedBait.strBaitName}, Remaining: {currentEquippedBait.intQuantity}");
+                currentEquippedBaitStatic.intQuantity--;
+                Debug.Log($"Used 1 {currentEquippedBaitStatic.strBaitName}, Remaining: {currentEquippedBaitStatic.intQuantity}");
 
-                // UPDATE UI
                 UpdateBaitQuantities();
                 UpdateBaitButtons();
 
-                // JIKA BAIT HABIS, AUTO EQUIP BAIT LAIN YANG ADA
-                if (currentEquippedBait.intQuantity == 0)
+                if (currentEquippedBaitStatic.intQuantity == 0)
                 {
                     AutoEquipOtherBait();
                 }
@@ -158,20 +169,18 @@ namespace Anoa
 
         protected void AutoEquipOtherBait()
         {
-            // CARI BAIT LAIN YANG MASIH ADA QUANTITYNYA
             foreach (BaitData bait in listBaitData)
             {
-                if (bait.intQuantity > 0 && bait != currentEquippedBait)
+                if (bait.intQuantity > 0 && bait != currentEquippedBaitStatic) // +++ PAKAI STATIC +++
                 {
-                    currentEquippedBait = bait;
-                    Debug.Log($"Auto equipped: {bait.strBaitName}");
+                    currentEquippedBaitStatic = bait; // +++ SIMPAN KE STATIC +++
+                    Debug.Log($"Auto equipped: {bait.strBaitName} (Luck: {bait.floatLuckBonus * 100}%)");
                     UpdateBaitButtons();
                     return;
                 }
             }
 
-            // JIKA SEMUA BAIT HABIS
-            currentEquippedBait = null;
+            currentEquippedBaitStatic = null; // +++ SIMPAN KE STATIC +++
             Debug.Log("Semua bait habis! Beli di shop.");
             UpdateBaitButtons();
         }

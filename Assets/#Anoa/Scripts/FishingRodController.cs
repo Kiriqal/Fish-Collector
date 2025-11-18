@@ -34,6 +34,9 @@ namespace Anoa
         protected Vector3 vecOriginalLinePosition;
         protected List<FishData> listCaughtFishes = new List<FishData>();
 
+        protected static List<FishData> listCaughtFishesStatic = new List<FishData>();
+
+
         protected void Start()
         {
             InitializeFishingLine();
@@ -53,10 +56,10 @@ namespace Anoa
                 if (fishCounterController != null && fishCounterController.IsCollectionComplete())
                 {
                     Debug.Log("Kapal penuh! Jual ikan di dermaga dulu.");
+                    ShowFullNotification();
                 }
                 else if (baitSelectionManager != null && !baitSelectionManager.HasEquippedBait())
                 {
-                    // TAMPILKAN NOTIFIKASI DI LAYAR
                     ShowBaitEmptyNotification();
                 }
                 else
@@ -104,7 +107,6 @@ namespace Anoa
         {
             boolIsFishing = true;
 
-            // PAKAI 1 BAIT SEBELUM MEMANCING
             if (baitSelectionManager != null)
             {
                 baitSelectionManager.UseEquippedBait();
@@ -115,7 +117,6 @@ namespace Anoa
                 boatMovementController.SetCanMove(false);
             }
 
-            // TURUNKAN TALI
             while (floatCurrentLineLength < floatMaxLineLength)
             {
                 floatCurrentLineLength += floatLineSpeed * Time.deltaTime;
@@ -125,41 +126,40 @@ namespace Anoa
 
             yield return new WaitForSeconds(floatWaitTime);
 
-            // SELALU DAPAT IKAN
             if (fishManager != null)
             {
                 FishData caughtFish = fishManager.GetRandomFish();
 
-                // TAMPILKAN TANDA SERU SEBELUM MINIGAME
                 ShowExclamationMark(caughtFish.intRarity);
                 yield return new WaitForSeconds(1f);
                 HideExclamationMark();
 
-                // LANJUT KE MINIGAME
                 if (minigameController != null)
                 {
                     minigameController.StartMinigame(caughtFish);
                     yield return StartCoroutine(WaitForMinigameToComplete());
                 }
+
+                // +++ SIMPAN KE STATIC LIST SETELAH MINIGAME SUKSES +++
+                listCaughtFishesStatic.Add(caughtFish);
+                Debug.Log($"Ikan tersimpan: {caughtFish.strFishName}. Total: {listCaughtFishesStatic.Count}");
             }
 
-            if (fishManager != null)
-            {
-                FishData caughtFish = fishManager.GetRandomFish();
-                listCaughtFishes.Add(caughtFish); // SIMPAN IKAN
-                                       
-            }   
+            StartCoroutine(ResetFishingLine());
         }
+
 
         public List<FishData> GetCaughtFishes()
         {
-            return listCaughtFishes;
+            return listCaughtFishesStatic;
         }
 
         public void ClearCaughtFishes()
         {
-            listCaughtFishes.Clear();
+            listCaughtFishesStatic.Clear();
+            Debug.Log("Semua ikan dijual, list cleared.");
         }
+
 
         protected void ShowExclamationMark(int rarity)
         {

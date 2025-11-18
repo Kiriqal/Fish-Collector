@@ -14,6 +14,9 @@ namespace Anoa
         public Sprite spriteBait;
         public int intQuantity;
 
+        // TAMBAH INI - Buff luck (% chance upgrade ke rarity lebih tinggi)
+        public float floatLuckBonus;
+
         public static List<BaitData> listAllBaitData = new List<BaitData>();
     }
 }
