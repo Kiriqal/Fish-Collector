@@ -3533,7 +3533,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 192, y: -139.8}
+  m_AnchoredPosition: {x: 185.3, y: -139.8}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &898536292
@@ -4583,7 +4583,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.9, y: -0.000045776367}
+  m_AnchoredPosition: {x: -22.689955, y: -0.000045776367}
   m_SizeDelta: {x: 20.0568, y: 19.6176}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1082241042
@@ -5535,8 +5535,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 222.1451, y: 143.12}
-  m_SizeDelta: {x: -715.4202, y: -335.54}
+  m_AnchoredPosition: {x: 223.9, y: 143.12}
+  m_SizeDelta: {x: -705.27, y: -335.54}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1292623093
 MonoBehaviour:
@@ -5712,7 +5712,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 158, y: -139.8}
+  m_AnchoredPosition: {x: 150.19, y: -139.8}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1336836125
@@ -6417,7 +6417,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 178, y: -139.8}
+  m_AnchoredPosition: {x: 167.6, y: -139.8}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1532341289
@@ -6507,7 +6507,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -6538,8 +6538,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 20.79, y: 0}
-  m_SizeDelta: {x: 28.7684, y: 30}
+  m_AnchoredPosition: {x: 19.7, y: 0}
+  m_SizeDelta: {x: 56.0363, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1603349498
 GameObject:

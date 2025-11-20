@@ -123,9 +123,9 @@ namespace Anoa
 
                 foreach (FishData fish in caughtFishes)
                 {
-                    if (fish.intRarity == 1) totalCoins += 5;      // Common
-                    else if (fish.intRarity == 2) totalCoins += 10; // Epic
-                    else if (fish.intRarity == 3) totalCoins += 20; // Mythic
+                    if (fish.intRarity == 1) totalCoins += 5;      // Common = 5
+                    else if (fish.intRarity == 2) totalCoins += 15; // Epic = 15
+                    else if (fish.intRarity == 3) totalCoins += 30; // Mythic = 30
                 }
 
                 coinManager.AddCoins(totalCoins);

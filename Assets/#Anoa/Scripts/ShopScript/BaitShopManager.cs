@@ -33,19 +33,47 @@ namespace Anoa
             }
         }
 
-        public void BuyWormBait() { TryBuyBait(0); }
-        public void BuySweetCornBait() { TryBuyBait(1); }
-        public void BuyCricketsBait() { TryBuyBait(2); }
-
-        protected void TryBuyBait(int baitIndex)
+        protected void TryBuyBait(BaitType baitType, int quantity)
         {
-            if (listBaitData == null || listBaitData.Count <= baitIndex) return;
+            BaitData bait = GetBaitByType(baitType);
+            if (bait == null) return;
 
-            BaitData bait = listBaitData[baitIndex];
-            bait.intQuantity++;
-            ShowBaitNotification(bait.strBaitName);
-            Debug.Log("Bought " + bait.strBaitName + ", Total: " + bait.intQuantity);
+            int playerCoins = CoinManager.GetStaticCoins();
+            int totalPrice = bait.intPrice * quantity;
+
+            if (playerCoins >= totalPrice)
+            {
+                // KURANGI COIN - PAKAI STATIC METHOD
+                CoinManager.AddCoinsStatic(-totalPrice);
+                bait.intQuantity += quantity;
+                Debug.Log("Bought " + quantity + " " + bait.strBaitName + " for " + totalPrice + " coins");
+                UpdateBaitButtons();
+            }
+            else
+            {
+                Debug.Log("Not enough coins for: " + bait.strBaitName);
+            }
         }
+
+        protected BaitData GetBaitByType(BaitType baitType)
+        {
+            foreach (BaitData bait in listBaitData)
+            {
+                if (bait.baitType == baitType)
+                    return bait;
+            }
+            return null;
+        }
+
+        protected void UpdateBaitButtons()
+        {
+            
+        }
+
+        // DAN TAMBAH METHOD INI JIKA BELUM ADA:
+        public void BuyWormBait() { TryBuyBait(BaitType.Worm, 1); }
+        public void BuySweetCornBait() { TryBuyBait(BaitType.SweetCorn, 1); }
+        public void BuyCricketsBait() { TryBuyBait(BaitType.Crickets, 1); }
 
         protected void ShowBaitNotification(string baitName)
         {

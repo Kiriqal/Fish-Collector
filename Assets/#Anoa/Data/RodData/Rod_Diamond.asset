@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rodType: 3
   strRodName: Diamond Rod
-  intPrice: 50
+  intPrice: 300
   spriteRod: {fileID: 0}
   boolIsOwned: 0
   boolIsEquipped: 0

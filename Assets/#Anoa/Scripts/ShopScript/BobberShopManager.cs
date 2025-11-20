@@ -86,11 +86,22 @@ namespace Anoa
         protected void TryBuyBobber(int bobberIndex)
         {
             BobberData bobber = listBobberData[bobberIndex];
+            int playerCoins = CoinManager.GetStaticCoins();
 
             if (!bobber.boolIsOwned)
             {
-                bobber.boolIsOwned = true;
-                Debug.Log("Bought: " + bobber.strBobberName);
+                if (playerCoins >= bobber.intPrice)
+                {
+                    // KURANGI COIN - PAKAI STATIC METHOD
+                    CoinManager.AddCoinsStatic(-bobber.intPrice);
+                    bobber.boolIsOwned = true;
+                    Debug.Log("Bought: " + bobber.strBobberName + " for " + bobber.intPrice + " coins");
+                }
+                else
+                {
+                    Debug.Log("Not enough coins for: " + bobber.strBobberName);
+                    return;
+                }
             }
 
             EquipBobber(bobberIndex);

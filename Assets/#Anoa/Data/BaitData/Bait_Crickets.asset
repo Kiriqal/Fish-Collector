@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baitType: 2
   strBaitName: Crickets
-  intPrice: 7
+  intPrice: 10
   spriteBait: {fileID: 0}
   intQuantity: 0
   floatLuckBonus: 0.1

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb26244279b891941bfe5529c56962bd, type: 3}
   m_Name: Bobber_Diamond
   m_EditorClassIdentifier: 
-  bobberType: 2
+  bobberType: 3
   strBobberName: Diamond Bobber
-  intPrice: 50
+  intPrice: 200
   spriteBobber: {fileID: 0}
   boolIsOwned: 0
   boolIsEquipped: 0

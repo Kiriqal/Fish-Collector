@@ -123,11 +123,22 @@ namespace Anoa
             if (listRodData == null || listRodData.Count <= rodIndex) return;
 
             RodData rod = listRodData[rodIndex];
+            int playerCoins = CoinManager.GetStaticCoins();
 
             if (!rod.boolIsOwned)
             {
-                rod.boolIsOwned = true;
-                Debug.Log("Bought: " + rod.strRodName);
+                if (playerCoins >= rod.intPrice)
+                {
+                    // KURANGI COIN - PAKAI STATIC METHOD
+                    CoinManager.AddCoinsStatic(-rod.intPrice);
+                    rod.boolIsOwned = true;
+                    Debug.Log("Bought: " + rod.strRodName + " for " + rod.intPrice + " coins");
+                }
+                else
+                {
+                    Debug.Log("Not enough coins for: " + rod.strRodName);
+                    return;
+                }
             }
 
             EquipRod(rodIndex);

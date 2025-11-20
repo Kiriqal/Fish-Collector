@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baitType: 0
   strBaitName: Worm
-  intPrice: 1
+  intPrice: 2
   spriteBait: {fileID: 0}
-  intQuantity: 0
+  intQuantity: 5
   floatLuckBonus: 0.02

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bobberType: 1
   strBobberName: Iron Bobber
-  intPrice: 20
+  intPrice: 30
   spriteBobber: {fileID: 0}
   boolIsOwned: 0
   boolIsEquipped: 0
