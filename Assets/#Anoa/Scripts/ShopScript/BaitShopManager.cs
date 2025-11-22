@@ -47,6 +47,10 @@ namespace Anoa
                 CoinManager.AddCoinsStatic(-totalPrice);
                 bait.intQuantity += quantity;
                 Debug.Log("Bought " + quantity + " " + bait.strBaitName + " for " + totalPrice + " coins");
+
+                // +++ PANGGIL NOTIFICATION +++
+                ShowBaitNotification(bait.strBaitName);
+
                 UpdateBaitButtons();
             }
             else

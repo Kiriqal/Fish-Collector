@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Fish_Anchovy
   m_EditorClassIdentifier: 
   strFishName: Anchovy
-  spriteFish: {fileID: 0}
+  spriteFish: {fileID: -7257756114029681795, guid: c2b50a85a65797042aacbd8804a5288d, type: 3}
   intRarity: 1
   floatCatchRate: 0

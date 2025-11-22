@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Fish_Carp
   m_EditorClassIdentifier: 
   strFishName: Carp
-  spriteFish: {fileID: 0}
+  spriteFish: {fileID: -3296944836905760080, guid: c2b50a85a65797042aacbd8804a5288d, type: 3}
   intRarity: 1
   floatCatchRate: 0

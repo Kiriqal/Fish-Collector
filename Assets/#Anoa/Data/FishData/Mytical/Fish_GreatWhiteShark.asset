@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Fish_GreatWhiteShark
   m_EditorClassIdentifier: 
   strFishName: GreatWhiteShark
-  spriteFish: {fileID: 0}
+  spriteFish: {fileID: -7485649401045961270, guid: c2b50a85a65797042aacbd8804a5288d, type: 3}
   intRarity: 3
   floatCatchRate: 0

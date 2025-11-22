@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: c2b50a85a65797042aacbd8804a5288d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7257756114029681795
+    second: Kumpulan_Ikan_Common[1]_0
+  - first:
+      213: 6895491335433348429
+    second: Kumpulan_Ikan_Common[1]_1
+  - first:
+      213: -6007034743995195697
+    second: Kumpulan_Ikan_Common[1]_2
+  - first:
+      213: -3296944836905760080
+    second: Kumpulan_Ikan_Common[1]_3
+  - first:
+      213: 6326554772856565942
+    second: Kumpulan_Ikan_Common[1]_4
+  - first:
+      213: -7485649401045961270
+    second: Kumpulan_Ikan_Common[1]_5
+  - first:
+      213: -5208581856869568570
+    second: Kumpulan_Ikan_Common[1]_6
+  - first:
+      213: -6885524976684160859
+    second: Kumpulan_Ikan_Common[1]_7
+  - first:
+      213: -5277558956122531679
+    second: Kumpulan_Ikan_Common[1]_8
+  - first:
+      213: -2159522678764274175
+    second: Kumpulan_Ikan_Common[1]_9
+  - first:
+      213: 770173045557884221
+    second: Kumpulan_Ikan_Common[1]_10
+  - first:
+      213: -479809200228806393
+    second: Kumpulan_Ikan_Common[1]_11
+  - first:
+      213: 4020225892457023391
+    second: Kumpulan_Ikan_Common[1]_12
+  - first:
+      213: 249246475414765854
+    second: Kumpulan_Ikan_Common[1]_13
+  - first:
+      213: 361971766575458038
+    second: Kumpulan_Ikan_Common[1]_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 290
+        width: 48
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7367dc7445474b90800000000000000
+      internalID: -7257756114029681795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_1
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 289
+        width: 47
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d45e940f5d4b1bf50800000000000000
+      internalID: 6895491335433348429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_2
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 294
+        width: 45
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fce9cba1ab9b2aca0800000000000000
+      internalID: -6007034743995195697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 287
+        width: 49
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ba8c288326ee32d0800000000000000
+      internalID: -3296944836905760080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 288
+        width: 48
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b0fa20eb007cc750800000000000000
+      internalID: 6326554772856565942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 241
+        width: 48
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac53a89c781ad1890800000000000000
+      internalID: -7485649401045961270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_6
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 248
+        width: 48
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cfaebdb56667b7b0800000000000000
+      internalID: -5208581856869568570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_7
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 245
+        width: 49
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a829a8c383b170a0800000000000000
+      internalID: -6885524976684160859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_8
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 239
+        width: 48
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a89223571852c6b0800000000000000
+      internalID: -5277558956122531679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_9
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 241
+        width: 46
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10efad7b095d702e0800000000000000
+      internalID: -2159522678764274175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 189
+        width: 50
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d35fe0ced4430ba00800000000000000
+      internalID: 770173045557884221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_11
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 197
+        width: 49
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 701d56413106759f0800000000000000
+      internalID: -479809200228806393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_12
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 194
+        width: 49
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f978abc2626bac730800000000000000
+      internalID: 4020225892457023391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_13
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 197
+        width: 49
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e118d9c4950857300800000000000000
+      internalID: 249246475414765854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Kumpulan_Ikan_Common[1]_14
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 194
+        width: 49
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f66375676bf50500800000000000000
+      internalID: 361971766575458038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Kumpulan_Ikan_Common[1]_0: -7257756114029681795
+      Kumpulan_Ikan_Common[1]_1: 6895491335433348429
+      Kumpulan_Ikan_Common[1]_10: 770173045557884221
+      Kumpulan_Ikan_Common[1]_11: -479809200228806393
+      Kumpulan_Ikan_Common[1]_12: 4020225892457023391
+      Kumpulan_Ikan_Common[1]_13: 249246475414765854
+      Kumpulan_Ikan_Common[1]_14: 361971766575458038
+      Kumpulan_Ikan_Common[1]_2: -6007034743995195697
+      Kumpulan_Ikan_Common[1]_3: -3296944836905760080
+      Kumpulan_Ikan_Common[1]_4: 6326554772856565942
+      Kumpulan_Ikan_Common[1]_5: -7485649401045961270
+      Kumpulan_Ikan_Common[1]_6: -5208581856869568570
+      Kumpulan_Ikan_Common[1]_7: -6885524976684160859
+      Kumpulan_Ikan_Common[1]_8: -5277558956122531679
+      Kumpulan_Ikan_Common[1]_9: -2159522678764274175
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

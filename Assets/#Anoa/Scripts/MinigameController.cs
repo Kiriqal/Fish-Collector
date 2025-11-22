@@ -189,10 +189,14 @@ namespace Anoa
         {
             Debug.Log("Dapat ikan: " + currentFishData.strFishName);
 
+            // +++ PASTIKAN BARIS INI ADA +++
+            FishCollectionController.UnlockFish(currentFishData);
+
             if (fishCounterController != null)
             {
                 fishCounterController.AddFish();
             }
+
 
             if (fishPopupController != null)
             {
