@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Fish_Lionfish
   m_EditorClassIdentifier: 
   strFishName: Lionfish
-  spriteFish: {fileID: -7485649401045961270, guid: c2b50a85a65797042aacbd8804a5288d, type: 3}
+  spriteFish: {fileID: -874565847191988846, guid: e07282c4ebc587b40844a28037b7b02c, type: 3}
   intRarity: 2
   floatCatchRate: 0

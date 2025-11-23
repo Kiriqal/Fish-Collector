@@ -14,7 +14,7 @@ namespace Anoa
         {
             if (boolCanMove)
             {
-                intMoveDirection = -1;
+                intMoveDirection = 1;
             }
         }
 
@@ -22,7 +22,7 @@ namespace Anoa
         {
             if (boolCanMove)
             {
-                intMoveDirection = 1;
+                intMoveDirection = -1;
             }
         }
 

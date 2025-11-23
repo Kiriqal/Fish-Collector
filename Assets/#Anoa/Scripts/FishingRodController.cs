@@ -1,4 +1,4 @@
-
+﻿
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
@@ -10,8 +10,8 @@ namespace Anoa
     {
         [Header("Fishing Settings")]
         [SerializeField] protected Transform transFishingLine;
-        [SerializeField] protected float floatLineSpeed = 3f;
-        [SerializeField] protected float floatMaxLineLength = 3f;
+        [SerializeField] protected float floatLineSpeed = 20f;
+        [SerializeField] protected float floatMaxLineLength = 10f;
         [SerializeField] protected float floatWaitTime = 2f;
 
         [Header("References")]
@@ -107,6 +107,10 @@ namespace Anoa
         {
             boolIsFishing = true;
 
+            // +++ RESET VARIABLE +++
+            floatCurrentLineLength = 0f;
+            UpdateLineLength();
+
             if (baitSelectionManager != null)
             {
                 baitSelectionManager.UseEquippedBait();
@@ -117,6 +121,7 @@ namespace Anoa
                 boatMovementController.SetCanMove(false);
             }
 
+            // TURUNKAN TALI SAMPAI MAX LENGTH
             while (floatCurrentLineLength < floatMaxLineLength)
             {
                 floatCurrentLineLength += floatLineSpeed * Time.deltaTime;
@@ -124,8 +129,7 @@ namespace Anoa
                 yield return null;
             }
 
-            yield return new WaitForSeconds(floatWaitTime);
-
+            // +++ TALI SUDAH MAX, BARU PROSES IKAN & MINIGAME +++
             if (fishManager != null)
             {
                 FishData caughtFish = fishManager.GetRandomFish();
@@ -140,7 +144,6 @@ namespace Anoa
                     yield return StartCoroutine(WaitForMinigameToComplete());
                 }
 
-                // +++ SIMPAN KE STATIC LIST SETELAH MINIGAME SUKSES +++
                 listCaughtFishesStatic.Add(caughtFish);
                 Debug.Log($"Ikan tersimpan: {caughtFish.strFishName}. Total: {listCaughtFishesStatic.Count}");
             }
@@ -231,6 +234,7 @@ namespace Anoa
         {
             if (transFishingLine != null)
             {
+                // Untuk Sprite Renderer - pakai localScale
                 transFishingLine.localScale = new Vector3(0.1f, floatCurrentLineLength, 1f);
                 transFishingLine.localPosition = vecOriginalLinePosition + Vector3.down * (floatCurrentLineLength / 2f);
             }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Fish_ElectricEel
   m_EditorClassIdentifier: 
   strFishName: ElectricEel
-  spriteFish: {fileID: -6007034743995195697, guid: c2b50a85a65797042aacbd8804a5288d, type: 3}
+  spriteFish: {fileID: 7613565302930197774, guid: e07282c4ebc587b40844a28037b7b02c, type: 3}
   intRarity: 2
   floatCatchRate: 0

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Fish_Goldfish
   m_EditorClassIdentifier: 
   strFishName: Goldfish
-  spriteFish: {fileID: -5208581856869568570, guid: c2b50a85a65797042aacbd8804a5288d, type: 3}
+  spriteFish: {fileID: -7257756114029681795, guid: c2b50a85a65797042aacbd8804a5288d, type: 3}
   intRarity: 1
   floatCatchRate: 0

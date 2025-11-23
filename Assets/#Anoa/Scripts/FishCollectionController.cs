@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 namespace Anoa
 {
@@ -21,6 +22,9 @@ namespace Anoa
         [SerializeField] protected List<Image> listEpicFishSlots;
         [SerializeField] protected List<Image> listMythicFishSlots;
 
+        [Header("Tooltip Reference")]
+        [SerializeField] protected TooltipManager tooltipManager;
+
         protected static List<string> listCaughtFishNames = new List<string>();
 
         protected void Start()
@@ -35,12 +39,12 @@ namespace Anoa
 
         protected void InitializeFishSlots()
         {
-            SetupFishSlots(listCommonFishSlots, listCommonFishData);
-            SetupFishSlots(listEpicFishSlots, listEpicFishData);
-            SetupFishSlots(listMythicFishSlots, listMythicFishData);
+            SetupFishSlotsWithTooltip(listCommonFishSlots, listCommonFishData);
+            SetupFishSlotsWithTooltip(listEpicFishSlots, listEpicFishData);
+            SetupFishSlotsWithTooltip(listMythicFishSlots, listMythicFishData);
         }
 
-        protected void SetupFishSlots(List<Image> fishSlots, List<FishData> fishDataList)
+        protected void SetupFishSlotsWithTooltip(List<Image> fishSlots, List<FishData> fishDataList)
         {
             for (int i = 0; i < fishSlots.Count; i++)
             {
@@ -49,8 +53,36 @@ namespace Anoa
                     FishData fish = fishDataList[i];
                     fishSlots[i].sprite = fish.spriteFish;
                     SetFishSlotState(fishSlots[i], false);
+                    AddTooltipToSlot(fishSlots[i], fish);
                 }
             }
+        }
+
+        protected void AddTooltipToSlot(Image fishSlot, FishData fishData)
+        {
+            EventTrigger trigger = fishSlot.gameObject.GetComponent<EventTrigger>();
+            if (trigger == null)
+            {
+                trigger = fishSlot.gameObject.AddComponent<EventTrigger>();
+            }
+
+            // Pointer Enter Event
+            EventTrigger.Entry entryEnter = new EventTrigger.Entry();
+            entryEnter.eventID = EventTriggerType.PointerEnter;
+            entryEnter.callback.AddListener((data) => {
+                bool isUnlocked = listCaughtFishNames.Contains(fishData.strFishName);
+                tooltipManager.ShowTooltip(fishData.strFishName, fishSlot.transform.position, fishData.intRarity, isUnlocked);
+            });
+
+            // Pointer Exit Event
+            EventTrigger.Entry entryExit = new EventTrigger.Entry();
+            entryExit.eventID = EventTriggerType.PointerExit;
+            entryExit.callback.AddListener((data) => {
+                tooltipManager.HideTooltip();
+            });
+
+            trigger.triggers.Add(entryEnter);
+            trigger.triggers.Add(entryExit);
         }
 
         protected void SetFishSlotState(Image fishSlot, bool isUnlocked)
@@ -110,5 +142,7 @@ namespace Anoa
         {
             listCaughtFishNames.Clear();
         }
+
+
     }
 }

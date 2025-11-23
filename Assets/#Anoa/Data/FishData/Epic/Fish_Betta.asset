@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Fish_Betta
   m_EditorClassIdentifier: 
   strFishName: Betta
-  spriteFish: {fileID: 6895491335433348429, guid: c2b50a85a65797042aacbd8804a5288d, type: 3}
+  spriteFish: {fileID: -5352451776772463432, guid: e07282c4ebc587b40844a28037b7b02c, type: 3}
   intRarity: 2
   floatCatchRate: 0

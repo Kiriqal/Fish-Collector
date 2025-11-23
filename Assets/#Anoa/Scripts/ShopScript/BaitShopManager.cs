@@ -17,6 +17,9 @@ namespace Anoa
 
         protected Queue<GameObject> queueActiveNotifications = new Queue<GameObject>();
 
+        [Header("Notification Reference")]
+        [SerializeField] protected NotificationManager notificationManager;
+
         protected void Start()
         {
             InitializeBaitShop();
@@ -43,19 +46,18 @@ namespace Anoa
 
             if (playerCoins >= totalPrice)
             {
-                // KURANGI COIN - PAKAI STATIC METHOD
                 CoinManager.AddCoinsStatic(-totalPrice);
                 bait.intQuantity += quantity;
-                Debug.Log("Bought " + quantity + " " + bait.strBaitName + " for " + totalPrice + " coins");
 
-                // +++ PANGGIL NOTIFICATION +++
+                // +++ PAKAI STACK SYSTEM SENDIRI +++
                 ShowBaitNotification(bait.strBaitName);
 
                 UpdateBaitButtons();
             }
             else
             {
-                Debug.Log("Not enough coins for: " + bait.strBaitName);
+                // +++ PAKAI NOTIFICATION MANAGER UNTUK ERROR +++
+                notificationManager?.ShowErrorNotification("Not enough coins!");
             }
         }
 

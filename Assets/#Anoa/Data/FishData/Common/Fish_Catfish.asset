@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Fish_Catfish
   m_EditorClassIdentifier: 
   strFishName: Catfish
-  spriteFish: {fileID: 6326554772856565942, guid: c2b50a85a65797042aacbd8804a5288d, type: 3}
+  spriteFish: {fileID: -6885524976684160859, guid: c2b50a85a65797042aacbd8804a5288d, type: 3}
   intRarity: 1
   floatCatchRate: 0

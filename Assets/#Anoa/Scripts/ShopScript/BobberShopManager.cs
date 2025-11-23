@@ -17,6 +17,9 @@ namespace Anoa
         [SerializeField] protected Text textGoldBobberPrice;
         [SerializeField] protected Text textDiamondBobberPrice;
 
+        [Header("Notification Reference")]
+        [SerializeField] protected NotificationManager notificationManager;
+
         protected void Start()
         {
             InitializeBobberShop();
@@ -92,13 +95,14 @@ namespace Anoa
             {
                 if (playerCoins >= bobber.intPrice)
                 {
-                    // KURANGI COIN - PAKAI STATIC METHOD
                     CoinManager.AddCoinsStatic(-bobber.intPrice);
                     bobber.boolIsOwned = true;
                     Debug.Log("Bought: " + bobber.strBobberName + " for " + bobber.intPrice + " coins");
                 }
                 else
                 {
+                    // +++ NOTIF TIDAK CUKUP COIN +++
+                    notificationManager?.ShowErrorNotification("Not enough coins!");
                     Debug.Log("Not enough coins for: " + bobber.strBobberName);
                     return;
                 }

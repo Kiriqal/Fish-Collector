@@ -17,6 +17,9 @@ namespace Anoa
         [SerializeField] protected Text textGoldRodPrice;
         [SerializeField] protected Text textDiamondRodPrice;
 
+        [Header("Notification Reference")]
+        [SerializeField] protected NotificationManager notificationManager;
+
         protected void Start()
         {
             InitializeRodShop();
@@ -129,13 +132,14 @@ namespace Anoa
             {
                 if (playerCoins >= rod.intPrice)
                 {
-                    // KURANGI COIN - PAKAI STATIC METHOD
                     CoinManager.AddCoinsStatic(-rod.intPrice);
                     rod.boolIsOwned = true;
                     Debug.Log("Bought: " + rod.strRodName + " for " + rod.intPrice + " coins");
                 }
                 else
                 {
+                    // +++ NOTIF TIDAK CUKUP COIN +++
+                    notificationManager?.ShowErrorNotification("Not enough coins!");
                     Debug.Log("Not enough coins for: " + rod.strRodName);
                     return;
                 }
@@ -157,6 +161,9 @@ namespace Anoa
             SaveRodStates();
             UpdateRodButtons();
             Debug.Log("Equipped: " + listRodData[rodIndex].strRodName);
+
+            RodVisualController rodVisual = FindFirstObjectByType<RodVisualController>();
+            rodVisual?.UpdateRodVisual(listRodData[rodIndex].rodType);
         }
     }
 }

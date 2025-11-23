@@ -11,7 +11,7 @@ namespace Anoa
         public RodType rodType;
         public string strRodName;
         public int intPrice;
-        public Sprite spriteRod;
+        //public Sprite spriteRod;
         public bool boolIsOwned;
         public bool boolIsEquipped;
         public int intProgressBonus;

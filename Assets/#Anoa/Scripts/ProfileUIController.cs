@@ -21,22 +21,46 @@ namespace Anoa
 
         protected void Start()
         {
-            buttonProfileButton.onClick.AddListener(ToggleProfilePanel);
+            buttonProfileButton.onClick.AddListener(ShowProfilePanel);
+
+            Button closeButton = gameObjectProfilePanel.GetComponentInChildren<Button>();
+            if (closeButton != null)
+            {
+                closeButton.onClick.AddListener(CloseProfilePanel);
+            }
+
             gameObjectProfilePanel.SetActive(false);
             UpdateBuffTexts();
         }
 
-        protected void ToggleProfilePanel()
+        protected void ShowProfilePanel()
         {
-            boolIsProfileOpen = !boolIsProfileOpen;
-            gameObjectProfilePanel.SetActive(boolIsProfileOpen);
-
-            if (boolIsProfileOpen)
-            {
-                UpdateBuffTexts();
-            }
+            boolIsProfileOpen = true;
+            gameObjectProfilePanel.SetActive(true);
+            SetOtherButtonsInteractable(false);
+            UpdateBuffTexts();
         }
 
+        protected void CloseProfilePanel()
+        {
+            boolIsProfileOpen = false;
+            gameObjectProfilePanel.SetActive(false);
+            SetOtherButtonsInteractable(true);
+        }
+
+        protected void SetOtherButtonsInteractable(bool interactable)
+        {
+            Button[] allButtons = FindObjectsByType<Button>(FindObjectsSortMode.None);
+            Button closeButton = gameObjectProfilePanel.GetComponentInChildren<Button>();
+
+            foreach (Button btn in allButtons)
+            {
+                if (btn != buttonProfileButton && btn != closeButton)
+                {
+                    btn.interactable = interactable;
+                }
+            }
+        }
         protected void UpdateBuffTexts()
         {
             UpdateRodBuffText();
