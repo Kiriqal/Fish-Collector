@@ -15,7 +15,6 @@ MonoBehaviour:
   rodType: 2
   strRodName: Gold Rod
   intPrice: 150
-  spriteRod: {fileID: 0}
   boolIsOwned: 0
   boolIsEquipped: 0
   intProgressBonus: 40

@@ -11,7 +11,7 @@ namespace Anoa
         protected void Start()
         {
             //PlayerPrefs.DeleteKey("PlayerCoins");
-            //SetCoinsForTesting(200);
+            //SetCoinsForTesting(300);
 
             LoadCoins();
             UpdateCoinDisplay();

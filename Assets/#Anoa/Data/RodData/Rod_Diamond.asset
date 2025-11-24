@@ -15,7 +15,6 @@ MonoBehaviour:
   rodType: 3
   strRodName: Diamond Rod
   intPrice: 300
-  spriteRod: {fileID: 0}
   boolIsOwned: 0
   boolIsEquipped: 0
   intProgressBonus: 50

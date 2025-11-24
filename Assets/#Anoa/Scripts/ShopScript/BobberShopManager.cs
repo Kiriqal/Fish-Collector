@@ -97,12 +97,16 @@ namespace Anoa
                 {
                     CoinManager.AddCoinsStatic(-bobber.intPrice);
                     bobber.boolIsOwned = true;
+
+                    // +++ NOTIF SUKSES +++
+                    notificationManager?.ShowNotification("Purchased " + bobber.strBobberName, true);
+
                     Debug.Log("Bought: " + bobber.strBobberName + " for " + bobber.intPrice + " coins");
                 }
                 else
                 {
-                    // +++ NOTIF TIDAK CUKUP COIN +++
-                    notificationManager?.ShowErrorNotification("Not enough coins!");
+                    // +++ NOTIF ERROR +++
+                    notificationManager?.ShowNotification("Not enough coins!", false);
                     Debug.Log("Not enough coins for: " + bobber.strBobberName);
                     return;
                 }

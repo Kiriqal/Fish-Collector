@@ -15,7 +15,6 @@ MonoBehaviour:
   rodType: 1
   strRodName: Iron Rod
   intPrice: 50
-  spriteRod: {fileID: 0}
   boolIsOwned: 0
   boolIsEquipped: 0
   intProgressBonus: 29

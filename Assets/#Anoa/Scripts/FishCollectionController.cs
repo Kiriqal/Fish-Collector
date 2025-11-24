@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
@@ -22,8 +22,12 @@ namespace Anoa
         [SerializeField] protected List<Image> listEpicFishSlots;
         [SerializeField] protected List<Image> listMythicFishSlots;
 
+        [Header("Completion Stamp")]
+        [SerializeField] protected GameObject gameObjectCompletionStamp;
+
         [Header("Tooltip Reference")]
         [SerializeField] protected TooltipManager tooltipManager;
+
 
         protected static List<string> listCaughtFishNames = new List<string>();
 
@@ -35,6 +39,7 @@ namespace Anoa
 
             gameObjectCollectionPanel.SetActive(false);
             InitializeFishSlots();
+            CheckCollectionCompletion(); // Cek stampel di awal
         }
 
         protected void InitializeFishSlots()
@@ -93,7 +98,6 @@ namespace Anoa
             }
             else
             {
-                // +++ BUAT LEBIH GELAP +++
                 fishSlot.color = new Color(0.1f, 0.1f, 0.1f, 0.8f); // Hampir hitam
             }
         }
@@ -114,6 +118,7 @@ namespace Anoa
             UpdatePanelSlots(listCommonFishSlots, listCommonFishData);
             UpdatePanelSlots(listEpicFishSlots, listEpicFishData);
             UpdatePanelSlots(listMythicFishSlots, listMythicFishData);
+            CheckCollectionCompletion(); // Cek stampel setiap buka collection
         }
 
         protected void UpdatePanelSlots(List<Image> fishSlots, List<FishData> fishDataList)
@@ -129,20 +134,84 @@ namespace Anoa
             }
         }
 
+        // METHOD UNLOCK IKAN VIA MEMANCING (DIPANGGIL DARI MINIGAME)
         public static void UnlockFish(FishData fishData)
         {
             if (!listCaughtFishNames.Contains(fishData.strFishName))
             {
                 listCaughtFishNames.Add(fishData.strFishName);
                 Debug.Log($"Fish unlocked: {fishData.strFishName}");
+
+                // Auto cek completion setiap dapat ikan baru
+                CheckAutoCompletion();
             }
         }
 
+        // CEK OTOMATIS SETIAP UNLOCK IKAN
+        protected static void CheckAutoCompletion()
+        {
+            FishCollectionController controller = FindFirstObjectByType<FishCollectionController>();
+            if (controller != null)
+            {
+                controller.CheckCollectionCompletion();
+            }
+        }
+
+        // METHOD CEK 100% COMPLETION
+        protected void CheckCollectionCompletion()
+        {
+            // Hitung total ikan dari semua list yang sudah ada
+            int totalFish = listCommonFishData.Count + listEpicFishData.Count + listMythicFishData.Count;
+            int unlockedFish = listCaughtFishNames.Count;
+
+            bool allUnlocked = (unlockedFish >= totalFish && totalFish > 0);
+
+            if (allUnlocked)
+            {
+                ShowCompletionStamp();
+            }
+            else
+            {
+                HideCompletionStamp();
+            }
+        }
+
+        protected void ShowCompletionStamp()
+        {
+            if (gameObjectCompletionStamp != null)
+            {
+                gameObjectCompletionStamp.SetActive(true);
+                Debug.Log("🎉 COLLECTION 100% COMPLETE! Stampel muncul!");
+            }
+        }
+
+        protected void HideCompletionStamp()
+        {
+            if (gameObjectCompletionStamp != null)
+            {
+                gameObjectCompletionStamp.SetActive(false);
+            }
+        }
+
+        // RESET COLLECTION (Optional)
         public static void ResetCollection()
         {
             listCaughtFishNames.Clear();
+            Debug.Log("Collection direset - semua ikan terkunci kembali");
         }
 
+        [ContextMenu("Test Unlock All Fish")]
+        public void TestUnlockAllFish()
+        {
+            foreach (var fish in listCommonFishData)
+                UnlockFish(fish);
+            foreach (var fish in listEpicFishData)
+                UnlockFish(fish);
+            foreach (var fish in listMythicFishData)
+                UnlockFish(fish);
 
+            UpdateCollectionDisplay();
+            Debug.Log("TEST: Semua ikan di-unlock!");
+        }
     }
 }

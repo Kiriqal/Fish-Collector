@@ -27,5 +27,18 @@ namespace Anoa
             yield return new WaitForSeconds(floatShowDuration);
             gameObjectNotificationPanel.SetActive(false);
         }
+
+        public void ShowNotification(string message, bool isSuccess)
+        {
+            if (gameObjectNotificationPanel != null && textNotification != null && imageBackground != null)
+            {
+                textNotification.text = message;
+                imageBackground.color = isSuccess ?
+                    new Color(0.2f, 0.8f, 0.2f, 0.8f) : // HIJAU
+                    new Color(0.8f, 0.2f, 0.2f, 0.8f);  // MERAH
+                gameObjectNotificationPanel.SetActive(true);
+                StartCoroutine(HideNotificationAfterDelay());
+            }
+        }
     }
 }
