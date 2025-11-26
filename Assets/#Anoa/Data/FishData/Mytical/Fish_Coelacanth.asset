@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Fish_Coelacanth
   m_EditorClassIdentifier: 
   strFishName: Coelacanth
-  spriteFish: {fileID: -7257756114029681795, guid: c2b50a85a65797042aacbd8804a5288d, type: 3}
+  spriteFish: {fileID: -8750690486627455983, guid: 53ff8dd4fb982124cb125cc6dbf6b9fa, type: 3}
   intRarity: 3
   floatCatchRate: 0

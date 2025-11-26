@@ -51,6 +51,9 @@ namespace Anoa
 
         protected void ShowRodPage()
         {
+            BaitShopManager baitManager = FindFirstObjectByType<BaitShopManager>();
+            baitManager?.ResetNotifications();
+
             gameObjectRodPage.SetActive(true);
             gameObjectBobberPage.SetActive(false);
             gameObjectBaitPage.SetActive(false);
@@ -62,6 +65,9 @@ namespace Anoa
 
         protected void ShowBobberPage()
         {
+            BaitShopManager baitManager = FindFirstObjectByType<BaitShopManager>();
+            baitManager?.ResetNotifications();
+
             gameObjectRodPage.SetActive(false);
             gameObjectBobberPage.SetActive(true);
             gameObjectBaitPage.SetActive(false);

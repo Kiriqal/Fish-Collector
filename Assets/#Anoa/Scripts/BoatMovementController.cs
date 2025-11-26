@@ -7,8 +7,22 @@ namespace Anoa
         [SerializeField] protected float floatMoveSpeed = 8f;
         protected int intMoveDirection;
 
-        // Tambah variable untuk cek status memancing
+        protected Rigidbody2D rb;
         protected bool boolCanMove = true;
+        protected bool boolIsTouchingBoundary = false;
+
+        // TAMBAHAN: Variabel batas posisi Kiri dan Kanan (sesuaikan di Inspector)
+        [SerializeField] protected float floatDockLimitX = -2.0f;
+        [SerializeField] protected float floatWallLimitX = 13.0f;
+
+        protected void Start()
+        {
+            rb = GetComponent<Rigidbody2D>();
+            if (rb == null)
+            {
+                Debug.LogError("Rigidbody2D missing on Boat!");
+            }
+        }
 
         public void StartMoveLeft()
         {
@@ -31,26 +45,62 @@ namespace Anoa
             intMoveDirection = 0;
         }
 
-        // Function untuk set bisa gerak atau tidak
         public void SetCanMove(bool canMove)
         {
             boolCanMove = canMove;
             if (!canMove)
             {
-                StopMove(); // Stop movement jika tidak bisa gerak
+                StopMove();
+                if (rb != null)
+                {
+                    rb.linearVelocity = Vector2.zero;
+                }
             }
         }
 
-        protected void Update()
+        protected void FixedUpdate()
         {
             HandleMovement();
         }
 
         protected void HandleMovement()
         {
-            if (boolCanMove)
+            if (!boolCanMove || rb == null) return;
+
+            if (boolIsTouchingBoundary)
             {
-                transform.Translate(Vector3.right * intMoveDirection * floatMoveSpeed * Time.deltaTime);
+                // Kondisi 1: Berhenti jika menempel di Kiri dan mencoba bergerak ke Kiri
+                if (intMoveDirection < 0 && transform.position.x < floatDockLimitX)
+                {
+                    rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+                    return;
+                }
+
+                // Kondisi 2: Berhenti jika menempel di Kanan dan mencoba bergerak ke Kanan
+                if (intMoveDirection > 0 && transform.position.x > floatWallLimitX)
+                {
+                    rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+                    return;
+                }
+            }
+
+            float targetVelocityX = intMoveDirection * floatMoveSpeed;
+            rb.linearVelocity = new Vector2(targetVelocityX, rb.linearVelocity.y);
+        }
+
+        protected void OnCollisionStay2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Ground"))
+            {
+                boolIsTouchingBoundary = true;
+            }
+        }
+
+        protected void OnCollisionExit2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Ground"))
+            {
+                boolIsTouchingBoundary = false;
             }
         }
     }

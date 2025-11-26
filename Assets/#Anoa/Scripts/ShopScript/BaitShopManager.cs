@@ -109,6 +109,26 @@ namespace Anoa
             StartCoroutine(HideNotificationAfterDelay(newNotification));
         }
 
+        public void ResetNotifications()
+        {
+            StopAllCoroutines();
+
+            queueActiveNotifications.Clear();
+
+            if (transNotificationParent != null)
+            {
+                foreach (Transform child in transNotificationParent)
+                {
+                    if (child.gameObject != gameObjectNotificationTemplate)
+                    {
+                        Destroy(child.gameObject);
+                    }
+                }
+            }
+
+            Debug.Log("Bait notifications reset");
+        }
+
         protected void UpdateNotificationPositions()
         {
             int index = 0;

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Fish_Leviathan
   m_EditorClassIdentifier: 
   strFishName: Leviathan
-  spriteFish: {fileID: -7485649401045961270, guid: c2b50a85a65797042aacbd8804a5288d, type: 3}
+  spriteFish: {fileID: -2248510803420452210, guid: 53ff8dd4fb982124cb125cc6dbf6b9fa, type: 3}
   intRarity: 3
   floatCatchRate: 0
